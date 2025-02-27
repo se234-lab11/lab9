@@ -1,16 +1,16 @@
 version = 1
 
-[[analyses]]
+[[analyzers]]
 name = "html"
 enabled = true
 types = ["html", "css", "js"]
 
-[[analyses]]
+[[analyzers]]
 name = "security"
 enabled = true
 types = ["html", "js"]
 
-[[analyses]]
+[[analyzers]]
 name = "style"
 enabled = true
 types = ["html", "css", "js"]
