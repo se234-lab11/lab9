@@ -1,0 +1,16 @@
+version = 2
+
+[[analyses]]
+name = "html"
+enabled = true
+types = ["html", "css", "js"]
+
+[[analyses]]
+name = "security"
+enabled = true
+types = ["html", "js"]
+
+[[analyses]]
+name = "style"
+enabled = true
+types = ["html", "css", "js"]
