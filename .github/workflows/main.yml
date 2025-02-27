@@ -25,38 +25,14 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Prepare the Docker Compose run
-        run: |
-          ls -l
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: .  # Current directory, should contain the Dockerfile
+          context: .
           push: true
-          tags: nuanwan04/frontend-app:latest
+          tags: nuanwan04/234-deploylab-frontend:latest
 
-      - name: Copy Docker Compose file via SSH
-        uses: appleboy/ssh-action@v0.1.7
+      - name: Run DeepSource analysis
+        uses: deepsource/action@v0.4
         with:
-          host: ${{ secrets.HOST_SERVER }}
-          username: ${{ secrets.HOST_USER_NAME }}
-          key: ${{ secrets.HOST_SSH_PRIVATE_KEY }}
-          port: 22
-          source: "docker-compose.yml"  # Ensure this file exists
-          target: "/home/ubuntu/frontend"  # Location on the server to copy the file
-
-      - name: Deploy with Docker Compose via SSH
-        uses: appleboy/ssh-action@v1.2.1
-        with:
-          host: ${{ secrets.HOST_SERVER }}
-          username: ${{ secrets.HOST_USER_NAME }}
-          key: ${{ secrets.HOST_SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd /home/ubuntu/frontend  # Change to the target directory where the docker-compose.yml is located
-            docker login --username ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-            docker-compose down  # Stop any running containers
-            docker-compose pull  # Pull the latest image from Docker Hub
-            docker-compose up -d  # Start the containers in detached mode
-            rm -rf /home/ubuntu/frontend  # Clean up the directory after deployment
+          token: ${{ secrets.DEEPSOURCE_TOKEN }} # Make sure you set this in GitHub Secrets
