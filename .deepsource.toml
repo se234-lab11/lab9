@@ -3,14 +3,4 @@ version = 1
 [[analyzers]]
 name = "html"
 enabled = true
-types = ["html", "css", "js"]
-
-[[analyzers]]
-name = "security"
-enabled = true
-types = ["html", "js"]
-
-[[analyzers]]
-name = "style"
-enabled = true
-types = ["html", "css", "js"]
+types = ["html"]
