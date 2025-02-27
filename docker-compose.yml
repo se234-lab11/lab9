@@ -1,0 +1,5 @@
+services:
+  web:
+    image: lab10butlab09:latest
+    ports:
+      - "8080:80"
