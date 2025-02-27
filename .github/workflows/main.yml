@@ -32,7 +32,14 @@ jobs:
           push: true
           tags: nuanwan04/234-deploylab-frontend:latest
 
-      - name: Run DeepSource analysis
-        uses: deepsource/action@v0.4
-        with:
-          token: ${{ secrets.DEEPSOURCE_TOKEN }} # Make sure you set this in GitHub Secrets
+      - name: Trigger DeepSource analysis
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.DEEPSOURCE_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "ref": "refs/heads/main",
+                  "commit_sha": "${{ github.sha }}",
+                  "repo_slug": "${{ github.repository }}"
+                }' \
+            https://deepsource.io/api/v1/repos/${{ github.repository }}/analysis/
